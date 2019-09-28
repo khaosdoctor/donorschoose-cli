@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { AppConfig } from '../../app.config'
 import { User, CreateUserData } from '../../domain/User'
+import { inject, injectable } from 'tsyringe'
 
 export interface StateFile {
   selectedUser: number | null
@@ -10,15 +11,16 @@ export interface StateFile {
   placesApiKey: string
 }
 
+@injectable()
 export class State {
   selectedUser: number | null = null
   users: User[] = []
   donorsChooseApiKey: string = ''
   placesApiKey: string = ''
-  private readonly configurationPath = path.resolve(`${__dirname}/../localStorage/`)
+  private readonly configurationPath = path.resolve(`${__dirname}/../../../.donorsChoose/`)
   private readonly configurationFile = 'state.json'
 
-  constructor (config: AppConfig) {
+  constructor (@inject('AppConfig') config: AppConfig) {
     this.donorsChooseApiKey = config.data.donorsChoose.apiKey
     this.placesApiKey = config.data.googlePlaces.apiKey
     this.load() // Replaces data if state file already exists
