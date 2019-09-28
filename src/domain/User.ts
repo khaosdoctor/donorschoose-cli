@@ -1,4 +1,5 @@
 import uuid from 'uuid/v4'
+import { createHash } from 'crypto'
 export interface CreateUserData {
   id?: string
   name: string
@@ -7,7 +8,7 @@ export interface CreateUserData {
 }
 
 export class User {
-  id: string = uuid()
+  id: string = createHash('md5').update(uuid()).digest('hex')
   name: string = ''
   email: string = ''
   zipcode: string = ''
