@@ -1,11 +1,13 @@
 #!/usr/bin/env node
+const menu = require('inquirer-menu') // No types provided :(
+const metadata = require('../../../package.json')
 import 'reflect-metadata'
+
 import cli from 'caporal'
-import { State } from '../../data/repositories/State'
+import chalk from 'chalk'
 import { container } from 'tsyringe'
 import { config } from '../../app.config'
-
-const metadata = require('../../../package.json')
+import { State } from '../../data/repositories/State'
 
 export function start () {
   container.register('AppConfig', { useValue: config })
@@ -13,9 +15,26 @@ export function start () {
 
   cli.version(metadata.version)
   cli
-    .command('init', 'Start a fresh new installation of your project')
-    .action((args, options, logger) => {
-      console.log(args, options, logger, state)
+    .action((args, options) => {
+      menu({
+        message: 'Donors Choose command line interface',
+        choices: {
+          'Projects': {
+
+          },
+          'User Settings': {
+
+          },
+          'General Settings': {
+
+          },
+          'Exit': () => {
+            return
+          }
+        }
+      })
+        .then(() => console.log('Bye!'))
+        .catch((err: Error) => console.error(chalk.red(`There was an error in the client: ${err.message}`)))
     })
 
   cli.parse(process.argv)
