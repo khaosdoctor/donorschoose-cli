@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 const menu = require('inquirer-menu') // No types provided :(
 const metadata = require('../../../package.json')
-import 'reflect-metadata'
 
+import 'reflect-metadata'
 import cli from 'caporal'
 import chalk from 'chalk'
 import { container } from 'tsyringe'
