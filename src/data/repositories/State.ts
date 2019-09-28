@@ -5,32 +5,44 @@ import { User, CreateUserData } from '../../domain/User'
 import { inject, injectable } from 'tsyringe'
 
 export interface StateFile {
-  selectedUser: number | null
+  selectedUser: User | null
   users: User[]
-  donorsChooseApiKey: string
-  placesApiKey: string
+  donorsChoose: {
+    apiKey: string
+    baseApiUri: string
+  }
+  googlePlaces: {
+    apiKey: string
+    baseApiUri: string
+  }
 }
 
 @injectable()
 export class State {
-  selectedUser: number | null = null
+  selectedUser: User | null = null
   users: User[] = []
-  donorsChooseApiKey: string = ''
-  placesApiKey: string = ''
+  donorsChoose: StateFile['donorsChoose'] = {
+    apiKey: '',
+    baseApiUri: ''
+  }
+  googlePlaces: StateFile['googlePlaces'] = {
+    apiKey: '',
+    baseApiUri: ''
+  }
   private readonly configurationPath = path.resolve(`${__dirname}/../../../.donorsChoose/`)
   private readonly configurationFile = 'state.json'
 
   constructor (@inject('AppConfig') config: AppConfig) {
-    this.donorsChooseApiKey = config.data.donorsChoose.apiKey
-    this.placesApiKey = config.data.googlePlaces.apiKey
+    this.donorsChoose = config.data.donorsChoose
+    this.googlePlaces = config.data.googlePlaces
     this.load() // Replaces data if state file already exists
   }
 
   async save () {
     const stateObject = {
-      selectedUser: this.selectedUser,
-      donorsChooseApiKey: this.donorsChooseApiKey,
-      placesApiKey: this.placesApiKey,
+      selectedUser: this.selectedUser ? this.selectedUser.serialize() : null,
+      donorsChoose: this.donorsChoose,
+      googlePlaces: this.googlePlaces,
       users: this.users.map(user => user.serialize())
     }
     if (!fs.existsSync(this.configurationPath)) fs.mkdirSync(this.configurationPath, { recursive: true })
@@ -42,9 +54,9 @@ export class State {
     if (!fs.existsSync(this.configFile)) return
 
     const data: StateFile = require(this.configFile)
-    this.donorsChooseApiKey = data.donorsChooseApiKey
-    this.placesApiKey = data.placesApiKey
-    this.selectedUser = data.selectedUser
+    this.donorsChoose = data.donorsChoose
+    this.googlePlaces = data.googlePlaces
+    this.selectedUser = data.selectedUser ? new User(data.selectedUser) : null
     this.users = data.users.map((user: CreateUserData) => new User(user))
   }
 
