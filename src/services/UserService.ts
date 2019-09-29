@@ -25,6 +25,8 @@ export class UserService {
   }
 
   async removeUser (id: string) {
+    const activeUser = this.repository.getActiveUser()
+    if (activeUser && activeUser.id === id) await this.repository.clearActiveUser()
     return this.repository.deleteById(id)
   }
 
@@ -36,14 +38,25 @@ export class UserService {
       ...updatedData
     }
     const updatedUser = new User(userData)
+    await this.repository.updateUser(updatedUser)
 
-    return this.repository.updateUser(updatedUser)
+    const activeUser = this.repository.getActiveUser()
+    if (activeUser && activeUser.id === updatedUser.id) await this.repository.selectUser(updatedUser)
+    return updatedUser
   }
 
   findById (id: string) {
     const user = this.repository.findById(id)
     if (!user) throw new UserNotFoundError(id)
     return user
+  }
+
+  async clearActiveUser () {
+    return this.repository.clearActiveUser()
+  }
+
+  getActiveUser () {
+    return this.repository.getActiveUser()
   }
 
   async selectUser (id: string) {
