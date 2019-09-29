@@ -15,7 +15,7 @@ export async function removeUser (service: UserService, logger: Logger) {
     }])
 
     await service.removeUser(answer.selectedUser)
-
+    return logger.success(`User ${logger.chalk.bold.magenta(answer.selectedUser)} was removed`)
   } catch (error) {
     return logger.error(error.message)
   }
