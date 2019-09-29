@@ -24,7 +24,7 @@ export function start () {
           'Projects': {
             message: chalk.cyan('Projects Menu: This is where you can query Donors Choose projects'),
             choices: {
-              'List Projects': () => interactions.projects.listProjects(services.donorsChooseService)
+              'List Projects': () => interactions.projects.listProjects(services.donorsChooseService, logger)
             }
           },
           'User Settings': {
@@ -41,10 +41,11 @@ export function start () {
           'General Settings': {
             message: chalk.cyan('Settings menu: This is where you can edit general settings'),
             choices: {
-              'Change Donors Choose API key': () => interactions.config.changeDonorsKey(services.donorsChooseService),
-              'Change Donors Choose base URL': () => interactions.config.changeDonorsBaseURL(services.donorsChooseService),
-              'Change Google Places API key': () => interactions.config.changePlacesKey(services.placesService),
-              'Change Google Places base URL': () => interactions.config.changePlacesBaseURL(services.placesService)
+              'List all client config': () => interactions.config.listConfig(services.placesService, services.donorsChooseService, logger),
+              'Change Donors Choose API key': () => interactions.config.changeDonorsKey(services.donorsChooseService, logger),
+              'Change Donors Choose base URL': () => interactions.config.changeDonorsBaseURL(services.donorsChooseService, logger),
+              'Change Google Places API key': () => interactions.config.changePlacesKey(services.placesService, logger),
+              'Change Google Places base URL': () => interactions.config.changePlacesBaseURL(services.placesService, logger)
             }
           },
           'Exit': () => {
