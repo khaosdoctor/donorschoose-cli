@@ -1,7 +1,7 @@
 import { injectable } from 'tsyringe'
-import { DonorsClient } from '../data/repositories/DonorsClient'
+// import { DonorsClient } from '../data/repositories/DonorsClient'
 
 @injectable()
 export class DonorsChooseService {
-  constructor (private readonly client: DonorsClient) { }
+  // constructor (private readonly client: DonorsClient) { }
 }

@@ -1,8 +1,8 @@
 import { injectable } from 'tsyringe'
-import { PlacesClient } from '../data/repositories/PlacesClient'
+// import { PlacesClient } from '../data/repositories/PlacesClient'
 
 @injectable()
 export class PlacesService {
 
-  constructor (private readonly client: PlacesClient) { }
+  // constructor (private readonly client: PlacesClient) { }
 }
