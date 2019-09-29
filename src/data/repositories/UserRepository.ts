@@ -1,4 +1,4 @@
-import { State } from './State'
+import { State } from './StateProvider'
 import { injectable } from 'tsyringe'
 import { User, CreateUserData } from '../../domain/User'
 
