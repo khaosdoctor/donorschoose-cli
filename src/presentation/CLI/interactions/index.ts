@@ -3,6 +3,7 @@ import { editUser } from './user/editUser'
 import { listUsers } from './user/listUsers'
 import { removeUser } from './user/removeUser'
 import { chooseUser } from './user/chooseUser'
+import { listActive } from './user/listActive'
 import { listProjects } from './projects/listProjects'
 import { changePlacesKey } from './config/changePlacesKey'
 import { changeDonorsKey } from './config/changeDonorsKey'
@@ -15,7 +16,8 @@ const interactions = {
     removeUser,
     editUser,
     chooseUser,
-    listUsers
+    listUsers,
+    listActive
   },
   projects: {
     listProjects

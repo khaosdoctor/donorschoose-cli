@@ -31,10 +31,11 @@ export function start () {
             message: chalk.cyan('Users menu: This is where you can edit, add and remove users'),
             choices: {
               'List Users': () => interactions.user.listUsers(services.userService, logger),
+              'View Active User': () => interactions.user.listActive(services.userService, logger),
+              'Select User': () => interactions.user.chooseUser(services.userService, logger),
               'Add User': () => interactions.user.addUser(services.userService, logger),
               'Remove User': () => interactions.user.removeUser(services.userService, logger),
-              'Edit User': () => interactions.user.editUser(services.userService, logger),
-              'Select User': () => interactions.user.chooseUser(services.userService, logger)
+              'Edit User': () => interactions.user.editUser(services.userService, logger)
             }
           },
           'General Settings': {
