@@ -53,7 +53,8 @@ export class State {
   load () {
     if (!fs.existsSync(this.configFile)) return
 
-    const data: StateFile = require(this.configFile)
+    // Cannot use require since JS Modules have internal cache which would not reflect the latest modifications
+    const data: StateFile = JSON.parse(fs.readFileSync(this.configFile).toString())
     this.donorsChoose = data.donorsChoose
     this.googlePlaces = data.googlePlaces
     this.selectedUser = data.selectedUser ? new User(data.selectedUser) : null
