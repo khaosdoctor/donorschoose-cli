@@ -10,6 +10,6 @@ export function listUsers (service: UserService, logger: Logger) {
   logger.success('These are the currently registered users:')
   for (let user of users) {
     if (activeUser && activeUser.id === user.id) activeStatus = `[${logger.chalk.bold.underline.green('Active')}]`
-    logger.message(`${logger.chalk.bold.magenta(user.id)} - ${user.name} <${logger.chalk.yellow(user.email)}> (zipcode: ${user.zipcode}) ${activeStatus}`)
+    logger.message(`${logger.chalk.bold.magenta(user.id)} - ${user.name} <${logger.chalk.yellow(user.email)}> (zipcode: ${user.zipcode}) ${activeStatus}`, 4)
   }
 }
