@@ -11,6 +11,7 @@
     "lint": "tslint --project tsconfig.json",
     "test": "mocha -r ts-node/register -b test/**/*.test.ts --no-warnings",
     "build": "tsc",
+    "build:watch": "tsc -w",
     "clean": "rm -rf dist",
     "build:clean": "npm run clean && npm run build",
     "start": "npm link && echo 'You can type `donorschoose` to start'"
