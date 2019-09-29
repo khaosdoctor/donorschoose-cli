@@ -1,7 +1,7 @@
 import { Chalk } from 'chalk'
 
 export class Logger {
-  constructor (private readonly chalk: Chalk) { }
+  constructor (readonly chalk: Chalk) { }
 
   private indent (level: number) {
     return ' '.repeat(level)
