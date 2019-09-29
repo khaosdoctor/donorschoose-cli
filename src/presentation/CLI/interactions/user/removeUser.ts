@@ -10,7 +10,7 @@ export async function removeUser (service: UserService, logger: Logger) {
     const answer = await inquirer.prompt([{
       type: 'list',
       name: 'selectedUser',
-      message: 'Please select an user to delete',
+      message: 'Please select an user to delete:',
       choices: users.map(user => ({ name: `${user.id} - ${user.name} <${user.email}>`, value: user.id }))
     }])
 
