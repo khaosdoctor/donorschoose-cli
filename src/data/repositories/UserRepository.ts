@@ -22,6 +22,10 @@ export class UserRepository {
     return this.listUsers()
   }
 
+  getActiveUser () {
+    return this.state.selectedUser
+  }
+
   findBy (key: keyof CreateUserData, value: string) {
     const user = this.state.users.find((user) => user[key] === value)
     if (!user) return null
@@ -42,6 +46,11 @@ export class UserRepository {
 
   countUsers () {
     return this.state.users.length
+  }
+
+  async clearActiveUser () {
+    this.state.selectedUser = null
+    await this.state.save()
   }
 
   async selectUser (chosenUser: User) {
