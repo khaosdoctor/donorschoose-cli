@@ -1,5 +1,22 @@
 import { UserService } from '../../../../services/UserService'
+import { Logger } from '../../../../utils/logger'
+import inquirer from 'inquirer'
 
-export function removeUser (_service: UserService) {
-  return console.log('Remove user')
+export async function removeUser (service: UserService, logger: Logger) {
+  try {
+    const users = service.listUsers()
+    if (!users.length) return logger.error('There are no registered users, please register an user in order to delete it')
+
+    const answer = await inquirer.prompt([{
+      type: 'list',
+      name: 'selectedUser',
+      message: 'Please select an user to delete',
+      choices: users.map(user => ({ name: `${user.id} - ${user.name} <${user.email}>`, value: user.id }))
+    }])
+
+    await service.removeUser(answer.selectedUser)
+
+  } catch (error) {
+    return logger.error(error.message)
+  }
 }
