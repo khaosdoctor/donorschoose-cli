@@ -7,6 +7,7 @@ import { listActive } from './user/listActive'
 import { listProjects } from './projects/listProjects'
 import { changePlacesKey } from './config/changePlacesKey'
 import { changeDonorsKey } from './config/changeDonorsKey'
+import { listConfig } from './config/listConfig'
 import { changeDonorsBaseURL } from './config/changeDonorsBaseURL'
 import { changePlacesBaseURL } from './config/changePlacesBaseURL'
 
@@ -26,7 +27,8 @@ const interactions = {
     changeDonorsBaseURL,
     changeDonorsKey,
     changePlacesBaseURL,
-    changePlacesKey
+    changePlacesKey,
+    listConfig
   }
 }
 
