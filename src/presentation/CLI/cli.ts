@@ -9,9 +9,11 @@ import { container } from 'tsyringe'
 import { config } from '../../app.config'
 import services from '../../services'
 import interactions from './interactions'
+import { Logger } from '../../utils/logger'
 
 export function start () {
   container.register('AppConfig', { useValue: config })
+  const logger = new Logger(chalk)
 
   cli.version(metadata.version)
   cli
@@ -28,11 +30,11 @@ export function start () {
           'User Settings': {
             message: chalk.cyan('Users menu: This is where you can edit, add and remove users'),
             choices: {
-              'List Users': () => interactions.user.listUsers(services.userService),
-              'Add User': () => interactions.user.addUser(services.userService),
-              'Remove User': () => interactions.user.removeUser(services.userService),
-              'Edit User': () => interactions.user.editUser(services.userService),
-              'Select User': () => interactions.user.chooseUser(services.userService)
+              'List Users': () => interactions.user.listUsers(services.userService, logger),
+              'Add User': () => interactions.user.addUser(services.userService, logger),
+              'Remove User': () => interactions.user.removeUser(services.userService, logger),
+              'Edit User': () => interactions.user.editUser(services.userService, logger),
+              'Select User': () => interactions.user.chooseUser(services.userService, logger)
             }
           },
           'General Settings': {
