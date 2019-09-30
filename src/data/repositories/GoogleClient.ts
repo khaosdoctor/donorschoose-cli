@@ -35,13 +35,13 @@ export class GoogleClient {
     await this.state.save()
   }
 
-  async getMapFromCoordinates (lat: string, long: string) {
+  async getMapURL (lat: string, long: string, schoolName: string) {
     try {
       // I could've used only the query parameter, however, without a place ID, the map details are poor
-      const { data } = await this.client.get<GeocodingResults>('/json', { params: { latlng: `${lat},${long}` } })
+      const { data } = await this.client.get<GeocodingResults>('/json', { params: { key: this.state.google.apiKey, latlng: `${lat},${long}` } })
       if (data.status !== 'OK' && data.error_message) throw new Error(data.error_message)
 
-      const mapURL = `${this.mapBaseURL}&query=${lat},${long}&query_place_id=${data.results[0].place_id}`
+      const mapURL = `${this.mapBaseURL}&query=${encodeURIComponent(schoolName)}&ll=${lat},${long}&query_place_id=${data.results[0].place_id}`
       return mapURL
     } catch (error) {
       if (error.response) throw new APIError(error.response)

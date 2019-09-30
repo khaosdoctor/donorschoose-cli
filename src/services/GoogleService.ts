@@ -18,7 +18,7 @@ export class GoogleService {
     return this.client.updateConfig(config)
   }
 
-  async getMapFromCoordinates (lat: string, long: string) {
-    return this.client.getMapFromCoordinates(lat, long)
+  async getMap (lat: string, long: string, schoolName: string) {
+    return this.client.getMapURL(lat, long, schoolName)
   }
 }
