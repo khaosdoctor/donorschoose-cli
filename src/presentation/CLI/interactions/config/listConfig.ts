@@ -1,8 +1,8 @@
 import { Logger } from '../../../../utils/logger'
-import { PlacesService } from '../../../../services/PlacesService'
+import { GoogleService } from '../../../../services/GoogleService'
 import { DonorsChooseService } from '../../../../services/DonorsChooseService'
 
-export function listConfig (placesService: PlacesService, donorsService: DonorsChooseService, logger: Logger) {
+export function listConfig (placesService: GoogleService, donorsService: DonorsChooseService, logger: Logger) {
   const config = {
     places: placesService.getConfig(),
     donors: donorsService.getConfig()

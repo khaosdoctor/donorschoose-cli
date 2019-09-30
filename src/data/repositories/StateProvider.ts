@@ -11,7 +11,7 @@ export interface StateFile {
     apiKey: string
     baseApiUri: string
   }
-  googlePlaces: {
+  google: {
     apiKey: string
     baseApiUri: string
   }
@@ -25,7 +25,7 @@ export class State {
     apiKey: '',
     baseApiUri: ''
   }
-  googlePlaces: StateFile['googlePlaces'] = {
+  google: StateFile['google'] = {
     apiKey: '',
     baseApiUri: ''
   }
@@ -34,7 +34,7 @@ export class State {
 
   constructor (@inject('AppConfig') config: AppConfig) {
     this.donorsChoose = config.data.donorsChoose
-    this.googlePlaces = config.data.googlePlaces
+    this.google = config.data.google
     this.load() // Replaces data if state file already exists
   }
 
@@ -42,7 +42,7 @@ export class State {
     const stateObject = {
       selectedUser: this.selectedUser ? this.selectedUser.serialize() : null,
       donorsChoose: this.donorsChoose,
-      googlePlaces: this.googlePlaces,
+      googlePlaces: this.google,
       users: this.users.map(user => user.serialize())
     }
     if (!fs.existsSync(this.configurationPath)) fs.mkdirSync(this.configurationPath, { recursive: true })
@@ -56,7 +56,7 @@ export class State {
     // Cannot use require since JS Modules have internal cache which would not reflect the latest modifications
     const data: StateFile = JSON.parse(fs.readFileSync(this.configFile).toString())
     this.donorsChoose = data.donorsChoose
-    this.googlePlaces = data.googlePlaces
+    this.google = data.google
     this.selectedUser = data.selectedUser ? new User(data.selectedUser) : null
     this.users = data.users.map((user: CreateUserData) => new User(user))
   }

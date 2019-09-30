@@ -1,5 +1,5 @@
 import { UserService } from './UserService'
-import { PlacesService } from './PlacesService'
+import { GoogleService } from './GoogleService'
 import { injectable, container } from 'tsyringe'
 import { DonorsChooseService } from './DonorsChooseService'
 
@@ -9,8 +9,8 @@ export default class Services {
     return container.resolve(UserService)
   }
 
-  static get placesService () {
-    return container.resolve(PlacesService)
+  static get googleService () {
+    return container.resolve(GoogleService)
   }
 
   static get donorsChooseService () {

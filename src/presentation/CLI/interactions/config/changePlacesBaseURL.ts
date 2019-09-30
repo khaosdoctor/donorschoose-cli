@@ -1,8 +1,8 @@
 import inquirer from 'inquirer'
 import { Logger } from '../../../../utils/logger'
-import { PlacesService } from '../../../../services/PlacesService'
+import { GoogleService } from '../../../../services/GoogleService'
 
-export async function changePlacesBaseURL (service: PlacesService, logger: Logger) {
+export async function changePlacesBaseURL (service: GoogleService, logger: Logger) {
   const currentConfigs = service.getConfig()
   let updatedConfig = await inquirer.prompt([
     {
