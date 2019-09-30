@@ -1,7 +1,6 @@
 import ora from 'ora'
 import inquirer from 'inquirer'
-import { addUser } from '../user/addUser'
-import { chooseUser } from '../user/chooseUser'
+import { userOnboarding } from './userOnboarding'
 import { Logger } from '../../../../utils/logger'
 import { APIError } from '../../../../data/errors/APIError'
 import { UserService } from '../../../../services/UserService'
@@ -11,20 +10,13 @@ import { DonorsChooseService } from '../../../../services/DonorsChooseService'
 export async function listProposals (donorsChooseService: DonorsChooseService, userService: UserService, placesService: GoogleService, logger: Logger) {
   const spinner = ora()
   try {
-    if (!userService.listUsers().length) {
-      logger.warn('There are no users registered, let us register one...')
-      await addUser(userService, logger)
-    }
-
-    if (!userService.getActiveUser()) {
-      logger.warn('You must set an active user in order to fetch data from the API')
-      await chooseUser(userService, logger)
-    }
+    await userOnboarding(userService, logger)
 
     spinner.start('Loading proposals...')
     const results = await donorsChooseService.getProposalsByZipcode()
-    if (!results.metadata.totalProposals) return logger.info('No proposals found')
     spinner.stop()
+
+    if (!results.metadata.totalProposals) return logger.info('No proposals found')
 
     const answer = await inquirer.prompt([{
       type: 'rawlist',
