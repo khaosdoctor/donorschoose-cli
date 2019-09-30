@@ -4,7 +4,7 @@ import Axios, { AxiosInstance } from 'axios'
 import { AppConfig } from '../../app.config'
 import { APIError } from '../errors/APIError'
 import { Proposal } from '../../domain/Proposal'
-import { decodeProposalString } from '../../utils/decodeProposalString'
+import { RawProposal } from '../../domain/RawProposal'
 
 export interface ProposalResponse {
   metadata: {
@@ -25,7 +25,7 @@ interface RawProposalResponse {
   index: string,
   max: string,
   breadcrumb: Array<string[]>
-  proposals: Proposal[]
+  proposals: RawProposal[]
 }
 
 @injectable()
@@ -45,7 +45,7 @@ export class DonorsClient {
         index: parseInt(metadata.index, 10),
         max: parseInt(metadata.max, 10)
       },
-      proposals: proposals.map(decodeProposalString)
+      proposals: proposals.map(Proposal.create)
     }
 
     return parsedResponse
