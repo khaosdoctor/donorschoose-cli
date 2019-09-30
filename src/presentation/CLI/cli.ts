@@ -21,10 +21,10 @@ export function start () {
       menu({
         message: chalk.yellow('Donors Choose command line interface:'),
         choices: {
-          'Projects': {
+          'Proposals': {
             message: chalk.cyan('Projects Menu: This is where you can query Donors Choose projects'),
             choices: {
-              'List Projects': () => interactions.projects.listProjects(services.donorsChooseService, logger)
+              'List Proposals': () => interactions.proposals.listProposals(services.donorsChooseService, services.userService, services.placesService, logger)
             }
           },
           'User Settings': {
@@ -54,7 +54,7 @@ export function start () {
         }
       })
         .then(() => console.log('Bye!'))
-        .catch((err: Error) => console.error(chalk.red(`There was an error in the client: ${err.message}`)))
+        .catch((err: Error) => console.error(chalk.red(`There was an error in the interface: ${err.message}`)))
     })
 
   cli.parse(process.argv)

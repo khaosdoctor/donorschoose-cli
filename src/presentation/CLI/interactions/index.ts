@@ -4,7 +4,7 @@ import { listUsers } from './user/listUsers'
 import { removeUser } from './user/removeUser'
 import { chooseUser } from './user/chooseUser'
 import { listActive } from './user/listActive'
-import { listProjects } from './projects/listProjects'
+import { listProposals } from './proposals/listProposals'
 import { changePlacesKey } from './config/changePlacesKey'
 import { changeDonorsKey } from './config/changeDonorsKey'
 import { listConfig } from './config/listConfig'
@@ -20,8 +20,8 @@ const interactions = {
     listUsers,
     listActive
   },
-  projects: {
-    listProjects
+  proposals: {
+    listProposals: listProposals
   },
   config: {
     changeDonorsBaseURL,
