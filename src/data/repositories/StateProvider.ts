@@ -42,7 +42,7 @@ export class State {
     const stateObject = {
       selectedUser: this.selectedUser ? this.selectedUser.serialize() : null,
       donorsChoose: this.donorsChoose,
-      googlePlaces: this.google,
+      google: this.google,
       users: this.users.map(user => user.serialize())
     }
     if (!fs.existsSync(this.configurationPath)) fs.mkdirSync(this.configurationPath, { recursive: true })
