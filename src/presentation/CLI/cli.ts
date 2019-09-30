@@ -44,8 +44,8 @@ export function start () {
               'List all client config': () => interactions.config.listConfig(services.googleService, services.donorsChooseService, logger),
               'Change Donors Choose API key': () => interactions.config.changeDonorsKey(services.donorsChooseService, logger),
               'Change Donors Choose base URL': () => interactions.config.changeDonorsBaseURL(services.donorsChooseService, logger),
-              'Change Google Places API key': () => interactions.config.changePlacesKey(services.googleService, logger),
-              'Change Google Places base URL': () => interactions.config.changePlacesBaseURL(services.googleService, logger)
+              'Change Google API key': () => interactions.config.changePlacesKey(services.googleService, logger),
+              'Change Google base URL': () => interactions.config.changePlacesBaseURL(services.googleService, logger)
             }
           },
           'Exit': () => {
