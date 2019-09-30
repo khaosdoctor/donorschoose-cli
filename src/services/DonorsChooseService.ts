@@ -20,4 +20,12 @@ export class DonorsChooseService {
   async getProposalsByZipcode () {
     return this.client.getProposalsByZipcode()
   }
+
+  async getProposalsByKeyword (keyword: string) {
+    return this.client.getProposalsByKeyword(encodeURIComponent(keyword.replace(' ', '+')))
+  }
+
+  async getProposalsByType (studentLed: boolean) {
+    return this.client.getProposalsByType(studentLed)
+  }
 }

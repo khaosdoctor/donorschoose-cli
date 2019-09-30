@@ -24,7 +24,9 @@ export function start () {
           'Proposals': {
             message: chalk.cyan('Projects Menu: This is where you can query Donors Choose projects'),
             choices: {
-              'List Proposals': () => interactions.proposals.listProposals(services.donorsChooseService, services.userService, services.googleService, logger)
+              'List high urgency proposals': () => interactions.proposals.listProposals(services.donorsChooseService, services.userService, services.googleService, logger),
+              'List proposals by keyword': () => interactions.proposals.listProposalsByKeyword(services.donorsChooseService, services.userService, services.googleService, logger),
+              'List proposals by type': () => interactions.proposals.listProposalsByType(services.donorsChooseService, services.userService, services.googleService, logger)
             }
           },
           'User Settings': {

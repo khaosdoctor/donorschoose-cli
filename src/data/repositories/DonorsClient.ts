@@ -62,6 +62,28 @@ export class DonorsClient {
     }
   }
 
+  async getProposalsByKeyword (keyword: string) {
+    try {
+      this.state.load()
+      const { data } = await this.client.get<RawProposalResponse>('/json_feed.html', { params: { keywords: `"${keyword}"` } })
+      return this.sanitizeResponse(data)
+    } catch (error) {
+      if (error.response) throw new APIError(error.response)
+      throw error
+    }
+  }
+
+  async getProposalsByType (studentLed: boolean) {
+    try {
+      this.state.load()
+      const { data } = await this.client.get<RawProposalResponse>('/json_feed.html', { params: { studentLed: `${studentLed}` } })
+      return this.sanitizeResponse(data)
+    } catch (error) {
+      if (error.response) throw new APIError(error.response)
+      throw error
+    }
+  }
+
   get apiKey () {
     return this.state.donorsChoose.apiKey
   }
