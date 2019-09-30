@@ -9,7 +9,7 @@
   "scripts": {
     "prepare": "npm run build:clean",
     "lint": "tslint --project tsconfig.json",
-    "test": "mocha -r ts-node/register -b test/**/*.test.ts --no-warnings",
+    "test": "mocha -r ts-node/register -b tests/**/*.test.ts --no-warnings",
     "build": "tsc",
     "build:watch": "tsc -w",
     "clean": "rm -rf dist",
