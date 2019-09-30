@@ -6,7 +6,7 @@ export const config = {
   data: {
     donorsChoose: {
       apiKey: env.get('DATA_DONORSCHOOSE_APIKEY', ''),
-      baseApiUri: env.get('DATA_DONORSCHOOSE_BASEAPIURI', 'https://api.donoschoose.org/common/')
+      baseApiUri: env.get('DATA_DONORSCHOOSE_BASEAPIURI', 'https://api.donorschoose.org/common/')
     },
     googlePlaces: {
       apiKey: env.get('DATA_GOOGLEPLACES_APIKEY', ''),
