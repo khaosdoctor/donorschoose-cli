@@ -43,32 +43,32 @@ describe('Interactions', () => {
           })
       })
 
-      it('Should list proposals by keyword', () => {
-        rimraf.sync(testStatePath)
-        const executionSteps = [ENTER, DOWN, DOWN, ENTER, 'keyword']
+      // it('Should list proposals by keyword', () => {
+      //   rimraf.sync(testStatePath)
+      //   const executionSteps = [ENTER, DOWN, DOWN, ENTER, 'keyword']
 
-        const donorsInterceptor = nock(process.env.DATA_DONORSCHOOSE_BASEAPIURI!)
-          .get('/json_feed.html')
-          .query({ keywords: `"keyword"`, APIKey: 'test_donors_key' })
-          .reply(200, singleProposal)
+      //   const donorsInterceptor = nock(process.env.DATA_DONORSCHOOSE_BASEAPIURI!)
+      //     .get('/json_feed.html')
+      //     .query({ keywords: `"keyword"`, APIKey: 'test_donors_key' })
+      //     .reply(200, singleProposal)
 
-        const googleInterceptor = nock(process.env.DATA_GOOGLE_BASEAPIURI!)
-          .get('/json')
-          .reply(200, geocodingResult)
+      //   const googleInterceptor = nock(process.env.DATA_GOOGLE_BASEAPIURI!)
+      //     .get('/json')
+      //     .reply(200, geocodingResult)
 
-        return createUser()
-          .then(chooseUser)
-          .then(() => {
-            return testCli([path.resolve(__dirname, '../../../dist/index.js')], executionSteps)
-              .then((result: string) => {
-                expect(fs.existsSync(path.join(testStatePath, 'state.json'))).to.equal(true)
-                expect(loadStateFile(testStatePath + '/state.json').users[0].name).to.equal('Test')
-                console.log(result)
-                expect(donorsInterceptor.isDone()).to.equal(true)
-                expect(googleInterceptor.isDone()).to.equal(true)
-              })
-          })
-      })
+      //   return createUser()
+      //     .then(chooseUser)
+      //     .then(() => {
+      //       return testCli([path.resolve(__dirname, '../../../dist/index.js')], executionSteps)
+      //         .then((result: string) => {
+      //           expect(fs.existsSync(path.join(testStatePath, 'state.json'))).to.equal(true)
+      //           expect(loadStateFile(testStatePath + '/state.json').users[0].name).to.equal('Test')
+      //           console.log(result)
+      //           expect(donorsInterceptor.isDone()).to.equal(true)
+      //           expect(googleInterceptor.isDone()).to.equal(true)
+      //         })
+      //     })
+      // })
     })
   })
 })
