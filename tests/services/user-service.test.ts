@@ -3,9 +3,9 @@ import sinon from 'sinon'
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
 import { UserService } from '../../src/services/UserService'
+import { User, CreateUserData } from '../../src/domain/User'
 import { State } from '../../src/data/repositories/StateProvider'
 import { UserRepository } from '../../src/data/repositories/UserRepository'
-import { User, CreateUserData } from '../../src/domain/User'
 import { UserAlreadyExistsError } from '../../src/domain/errors/UserAlreadyExistsError'
 const userData: CreateUserData = {
   email: 'test@test.com',
@@ -91,5 +91,66 @@ describe('Removing users', () => {
     deleteByIdStub.restore()
     clearActiveStub.restore()
     getActiveStub.restore()
+  })
+})
+
+describe('Updating users', () => {
+  const userRepository = new UserRepository(sinon.spy() as unknown as State)
+  const userService = new UserService(userRepository)
+
+  it('Should update a non-active user', async () => {
+    const findByIdStub = sinon.stub(userRepository, 'findById').returns(existingUser)
+    const updateUserStub = sinon.stub(userRepository, 'updateUser').callsFake(async (user: User) => user)
+    const getActiveStub = sinon.stub(userRepository, 'getActiveUser').returns(new User(userData))
+    const selectUserStub = sinon.stub(userRepository, 'selectUser').resolves()
+
+    const result = await userService.updateUser(existingUser.id, {
+      email: 'update@test.com',
+      name: existingUser.name,
+      zipcode: existingUser.zipcode
+    })
+
+    expect(findByIdStub.called).to.equal(true)
+    expect(updateUserStub.called).to.equal(true)
+    expect(updateUserStub.args[0][0]).to.be.instanceOf(User)
+    expect(updateUserStub.args[0][0].email).to.equal(result.email)
+    expect(updateUserStub.args[0][0].id).to.equal(result.id)
+    expect(getActiveStub.called).to.equal(true)
+    expect(selectUserStub.called).to.equal(false)
+    expect(result).to.be.instanceOf(User)
+    expect(result.id).to.equal(existingUser.id)
+    expect(result.email).to.not.equal(existingUser.email)
+    findByIdStub.restore()
+    updateUserStub.restore()
+    getActiveStub.restore()
+    selectUserStub.restore()
+  })
+
+  it('Should update an active user', async () => {
+    const findByIdStub = sinon.stub(userRepository, 'findById').returns(existingUser)
+    const updateUserStub = sinon.stub(userRepository, 'updateUser').callsFake(async (user: User) => user)
+    const getActiveStub = sinon.stub(userRepository, 'getActiveUser').returns(existingUser)
+    const selectUserStub = sinon.stub(userRepository, 'selectUser').resolves()
+
+    const result = await userService.updateUser(existingUser.id, {
+      email: 'update@test.com',
+      name: existingUser.name,
+      zipcode: existingUser.zipcode
+    })
+
+    expect(findByIdStub.called).to.equal(true)
+    expect(updateUserStub.called).to.equal(true)
+    expect(updateUserStub.args[0][0]).to.be.instanceOf(User)
+    expect(updateUserStub.args[0][0].email).to.equal(result.email)
+    expect(updateUserStub.args[0][0].id).to.equal(result.id)
+    expect(getActiveStub.called).to.equal(true)
+    expect(selectUserStub.called).to.equal(true)
+    expect(result).to.be.instanceOf(User)
+    expect(result.id).to.equal(existingUser.id)
+    expect(result.email).to.not.equal(existingUser.email)
+    findByIdStub.restore()
+    updateUserStub.restore()
+    getActiveStub.restore()
+    selectUserStub.restore()
   })
 })
