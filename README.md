@@ -14,6 +14,8 @@ You'll get this screen
 
 [![asciicast](https://asciinema.org/a/JBdTq1EdDANVGwWMja6zsz5hE.svg)](https://asciinema.org/a/JBdTq1EdDANVGwWMja6zsz5hE)
 
+> Tests can be run by typing `npm test`, they take a while...
+
 ## Usage
 
 The CLI uses a local state file which is stored into the `.donorsChoose` directory. This state file is the single source of truth for the application. Along with that you can set 4 environment variables:
@@ -24,6 +26,8 @@ DATA_DONORSCHOOSE_BASEAPIURI
 DATA_GOOGLE_APIKEY
 DATA_GOOGLE_BASEAPIURI
 ```
+
+> You can also change the location of the state file by setting the `DATA_APP_CONFIGURATIONPATH` environment variable.
 
 Which are respectively the API keys and base URIs for Donors Choose and Google Geocoding API. These values can be set once, if there's no state file set (first execution) all initial values will be retrieved from these variables.
 
@@ -61,3 +65,9 @@ Basically the whole idea behind this architecture is to mix the MVC architecture
 - ***Service Layer***: The service layer is the glue between the **data** and the **presentation** layers. It's the part of the application that will apply business logic and will orchestrate user calls. This layer takes a **data** layer as parameter and consumes it.
 
 The main advantage of using this model is that you extend and plug in new features without having to change large parts of the code, for instance, it is possible to add a new presentation layer (like, an API) without having to drop de CLI, this way we could, for example, execute the app passing a flag `--api` and then this app would be executed as an API, sharing services, data and all other layers.
+
+## Main libraries
+
+The app is pretty simple, it uses several small libraries such as `sugar-env` to make the code more readable and easier to understand, but it also leverages core CLI libraries. The two most important libraries in this app are the `caporal` library, which allows us to easily create CLIs, and `inquirer`, which allows us to prompt the user in a more dynamic and friendly fashion.
+
+In order to test it, I used `sinon` to mock most of the classes and `inquirer-test` to perform integration tests by simulating the execution of the CLI's process. This lib is just a wrapper around `child_process` and `spawn`. I'm also using `mocha` as test runner and `chai` as assertion library (I really do like the native `assert` but `chai` is a bit easier to understand when reading).
