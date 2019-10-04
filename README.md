@@ -64,6 +64,10 @@ Basically the whole idea behind this architecture is to mix the MVC architecture
 - ***Domain Layer***: Domain layers are where the main data structures are stored. This is where all the entities from the app are located, along with domain errors. This layer can be consumed by every other layer. The domain layer does not consume any other layers, it is only consumed.
 - ***Service Layer***: The service layer is the glue between the **data** and the **presentation** layers. It's the part of the application that will apply business logic and will orchestrate user calls. This layer takes a **data** layer as parameter and consumes it.
 
+> There is the `utils` layer, which is the place we put our helper codes and little functions.
+
+> All layers can have an `errors` directory, dedicated to named errors in JS, so we can query for error types on the **presentation** layer using `instanceof`
+
 The main advantage of using this model is that you extend and plug in new features without having to change large parts of the code, for instance, it is possible to add a new presentation layer (like, an API) without having to drop de CLI, this way we could, for example, execute the app passing a flag `--api` and then this app would be executed as an API, sharing services, data and all other layers.
 
 ## Main libraries
