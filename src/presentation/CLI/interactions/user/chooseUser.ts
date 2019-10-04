@@ -4,7 +4,7 @@ import inquirer = require('inquirer')
 
 export async function chooseUser (service: UserService, logger: Logger) {
   const users = service.listUsers()
-  if (!users) return logger.error('There are no users registered, please register a new user before selecting')
+  if (users.length <= 0) return logger.error('There are no users registered, please register a new user before selecting')
 
   const answer = await inquirer.prompt([{
     type: 'list',
