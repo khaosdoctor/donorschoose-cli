@@ -18,7 +18,7 @@ export interface ProposalResponse {
   proposals: Proposal[]
 }
 
-interface RawProposalResponse {
+export interface RawProposalResponse {
   searchTerms: string
   searchURL: string
   totalProposals: string,
@@ -47,7 +47,6 @@ export class DonorsClient {
       },
       proposals: proposals.map(Proposal.create)
     }
-
     return parsedResponse
   }
 
@@ -66,6 +65,7 @@ export class DonorsClient {
     try {
       this.state.load()
       const { data } = await this.client.get<RawProposalResponse>('/json_feed.html', { params: { keywords: `"${keyword}"` } })
+
       return this.sanitizeResponse(data)
     } catch (error) {
       if (error.response) throw new APIError(error.response)
