@@ -11,6 +11,9 @@ export const config = {
     google: {
       apiKey: env.get('DATA_GOOGLE_APIKEY', ''),
       baseApiUri: env.get('DATA_GOOGLE_BASEAPIURI', 'https://maps.googleapis.com/maps/api/geocode/')
+    },
+    app: {
+      configurationPath: env.get('DATA_APP_CONFIGURATIONPATH', '')
     }
   }
 }

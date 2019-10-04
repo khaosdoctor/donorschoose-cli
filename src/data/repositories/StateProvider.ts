@@ -33,6 +33,7 @@ export class State {
   private readonly configurationFile = 'state.json'
 
   constructor (@inject('AppConfig') config: AppConfig) {
+    if (config.data.app.configurationPath) this.configurationPath = config.data.app.configurationPath
     this.donorsChoose = config.data.donorsChoose
     this.google = config.data.google
     this.load() // Replaces data if state file already exists
