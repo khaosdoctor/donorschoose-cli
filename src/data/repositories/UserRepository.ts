@@ -41,7 +41,7 @@ export class UserRepository {
   async updateUser (userToUpdate: User) {
     await this.deleteById(userToUpdate.id)
     await this.addUser(userToUpdate)
-    return this.listUsers()
+    return userToUpdate
   }
 
   countUsers () {
