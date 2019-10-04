@@ -7,7 +7,7 @@ import isZipcode from '../../../../utils/isZipcode'
 export async function editUser (service: UserService, logger: Logger) {
   try {
     const users = service.listUsers()
-    if (!users.length) return logger.error('There are no registered users, please register an user in order to delete it')
+    if (!users.length) return logger.error('There are no registered users, please register an user in order to edit it')
 
     const answer = await inquirer.prompt([{
       type: 'list',
@@ -41,7 +41,7 @@ export async function editUser (service: UserService, logger: Logger) {
       }])
 
     await service.updateUser(user.id, update)
-    return logger.success(`User ${logger.chalk.bold.magenta(answer.selectedUser)} was removed`)
+    return logger.success(`User ${logger.chalk.bold.magenta(answer.selectedUser)} was updated`)
   } catch (error) {
     return logger.error(error.message)
   }
