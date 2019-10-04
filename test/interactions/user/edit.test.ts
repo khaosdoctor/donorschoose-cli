@@ -30,14 +30,13 @@ describe('Interactions', () => {
         })
       })
 
-      it('Should not list if there are no users', (done: any) => {
+      it('Should not list if there are no users', () => {
         rimraf.sync(testStatePath)
         const executionSteps = [DOWN, ENTER, UP, UP, ENTER]
-        testCli([path.resolve(__dirname, '../../../dist/index.js')], executionSteps)
+        return testCli([path.resolve(__dirname, '../../../dist/index.js')], executionSteps)
           .then((result: string) => {
             expect(fs.existsSync(path.join(testStatePath, 'state.json'))).to.equal(false)
             expect(/There are no registered users, please register an user in order to edit it/gm.test(result)).to.equal(true)
-            done()
           })
       })
 
